@@ -13,7 +13,12 @@ void main() {
 	cin >> input;
 
 
-	for(int i=)
+	for (int i = 0; i < input; i++) {
+
+		cout << rand() % 6 + 1 << " ";
+
+
+	}
 
 
 }
