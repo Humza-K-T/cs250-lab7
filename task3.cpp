@@ -67,13 +67,13 @@ void testMovMin() {
 
 	//in vector to store random values
 	vector <int> in;
-	//out vector to store values after bubble sort double loop
+	//out vector to store values after bubble sort 
 	vector <int> out;
-	//test vector to store values after bubble sort double loop
-	vector <int> out2;
-
+	
 	for (int entries = 10; entries <= 100000; entries *= 10) {
 
+
+		time_t start, end;
 
 		//using time seed for rand
 		srand(time(0));
@@ -82,7 +82,7 @@ void testMovMin() {
 		out.clear();
 
 
-		cout << "Entries: " << entries << endl;
+		cout << "\n\nEntries: " << entries << endl;
 
 		//pushing random numbers in vecotr 'in'
 		for (int i = 0; i < entries; i++) {
@@ -101,15 +101,29 @@ void testMovMin() {
 		in.push_back(randValue);
 		
 
-		cout << "Starting Double Loop Implementation" << endl;
+		
 		//using moveMin function to sort, and storing the result in "out" vector
-		moveMin(in, out);
-		cout << "Completed Double Loop Implementation" << endl;
 
-		cout << "Starting Single Loop Implementation" << endl;
+		time(&start);
+		moveMin(in, out);
+		time(&end);
+		
+		double time_taken = double(end - start);
+		cout << "Double Loop: " << fixed
+			<< time_taken << " sec " << endl;
+		
+		
+		//clearing vector
+		out.clear();
+
+		
 		//using single loop moveMin 
-		UpdatedMoveMin(in, out2);
-		cout << "Completed Single Loop Implementation" << endl;
+		time(&start);
+		UpdatedMoveMin(in, out);
+		time(&end);
+		time_taken = double(end - start);
+		cout << "Single Loop: " << fixed
+			<< time_taken << " sec " << endl;
 
 
 	}
@@ -120,19 +134,8 @@ void testMovMin() {
 
 void main() {
 
-	
-	
 	testMovMin();
 
-
-	
-
-	
-
-
-
-
-	
 }
 
 
