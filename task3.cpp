@@ -10,11 +10,37 @@ using namespace std;
 //output is stored in "out" vector
 //both vectors are refrenced directly from main method so 
 //nothing is to be returned
+//Complexity n^2+n
+bool moveMin(vector<int> in, vector<int>& out) {
+	int a = in.size();
+
+	//bubble sort
+	for (int i = 0; i < a - 1; i++) {
+
+		for (int j = 0; j < a - i - 1; j++) {
+
+			if (in[j] > in[j + 1]) {
+				int temp = in[j];
+				in[j] = in[j + 1];
+				in[j + 1] = temp;
+			}
+		}
+	}
+
+	//pushing sorted vector in "out" vector
+	for (int i = 0; i < a; i++) {
+		out.push_back(in[i]);
+	}
+
+	return true;
+}
+
 
 //Updated implementation:
 //loop starts from the end and keeps swaping the elements until the 
 //last element is at its correct position
-bool moveMin(vector<int>& in, vector<int>& out) {
+//complexity 2n
+bool UpdatedMoveMin(vector<int> in, vector<int>& out) {
 	int a = in.size();
 
 	//bubble sort
@@ -35,98 +61,78 @@ bool moveMin(vector<int>& in, vector<int>& out) {
 	return true;
 }
 
-
-
-void main() {
-
-	//using time seed for rand
-	srand(time(0));
+void testMovMin() {
 
 	//creating vectors 
 
 	//in vector to store random values
 	vector <int> in;
-	//out vector to store values after bubble sort
+	//out vector to store values after bubble sort double loop
 	vector <int> out;
-	//test vector to store values after in built sort method
-	vector <int> test;
+	//test vector to store values after bubble sort double loop
+	vector <int> out2;
 
-	//pushing 30 random numbers in vecotr 'in'
-	for (int i = 0; i < 30; i++)
-		in.push_back(rand() % 100 + 1);
-
-	//pushing values of in vector into test vector
-	for (int i = 0; i < in.size(); i++)
-		test.push_back(in[i]);
+	for (int entries = 10; entries <= 100000; entries *= 10) {
 
 
-	//sorting using inbuilt function
-	sort(in.begin(), in.end());
-	sort(test.begin(), test.end());
+		//using time seed for rand
+		srand(time(0));
+		//clearing vectors
+		in.clear();
+		out.clear();
 
 
-	//appending a random value at the end of vectors
+		cout << "Entries: " << entries << endl;
 
-	int randValue = rand() % 100 + 1;
-	in.push_back(randValue);
-	test.push_back(randValue);
+		//pushing random numbers in vecotr 'in'
+		for (int i = 0; i < entries; i++) {
+			in.push_back(rand() % entries + 1);
+			
 
-
-	//displaying input array with last element un sorted
-	cout << "Input Array:\n";
-	for (int i = 0; i < in.size(); i++)
-	{
-		cout << in[i] << " ";
-	}
-
-	//using moveMin function to sort, and storing the result in "out" vector
-	moveMin(in, out);
-
-	//again sorting "in" and "test"
-	sort(in.begin(), in.end());
-	sort(test.begin(), test.end());
-
-
-	//displaying inbuilt method sorted array
-	cout << "\nsorted array using sort() function \n";
-	for (int i = 0; i < in.size(); i++)
-	{
-
-		cout << test[i] << " ";
-	}
-
-	//displaying bubble sorted array
-
-	cout << "\n\nsorted array using movMin() function \n";
-
-	for (int i = 0; i < out.size(); i++)
-	{
-
-		cout << out[i] << " ";
-	}
-
-	cout << "\n\n\n";
-
-
-	//method to verify if both methods produce correct results
-	bool areEqual = true;
-
-	for (int i = 0; i < test.size(); i++)
-	{
-		if (test[i] != out[i])
-		{
-			areEqual = false;
-			break;
 		}
+			
+		//sorting using inbuilt function
+		sort(in.begin(), in.end());
+		
+
+		//appending a random value at the end of vectors
+
+		int randValue = rand() % 100 + 1;
+		in.push_back(randValue);
+		
+
+		cout << "Starting Double Loop Implementation" << endl;
+		//using moveMin function to sort, and storing the result in "out" vector
+		moveMin(in, out);
+		cout << "Completed Double Loop Implementation" << endl;
+
+		cout << "Starting Single Loop Implementation" << endl;
+		//using single loop moveMin 
+		UpdatedMoveMin(in, out2);
+		cout << "Completed Single Loop Implementation" << endl;
+
 
 	}
-	//displaying result
-	if (areEqual) {
-		cout << "\nBoth Vectors are equal" << endl;
-	}
-	else
-		cout << "\nBoth Vectors are equal" << endl;
 
+
+}
+
+
+void main() {
+
+	
+	
+	testMovMin();
+
+
+	
+
+	
+
+
+
+
+	
 }
 
 
